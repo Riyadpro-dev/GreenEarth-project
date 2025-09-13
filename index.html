@@ -75,8 +75,8 @@
 
     <section class="bg-[#f0fdf4] pt-4">
       <h1 class="text-xl font-bold text-center py-5">Choose Your Trees</h1>
-      <div class="w-11/12 mx-auto flex">
-        <div id="categories-sidebar" class="lg:w-[15%] p-5">
+      <div class="lg:w-11/12 sm:w-[95%] mx-auto flex">
+        <div id="categories-sidebar" class="lg:w-[15%]  p-5">
           <h1 class="font-semibold pb-2">Categories</h1>
           <div
             id="all-trees"
@@ -98,10 +98,14 @@
 
         <div
           id="card-container"
-          class="lg:w-[70%] grid lg:grid-cols-3 sm:grid-cols-2 gap-3 p-5"
+          class=" lg:w-[70%] grid lg:grid-cols-3 sm:grid-cols-2 gap-3 p-5"
         ></div>
-        <div class="bg-emerald-400 h-[500px] lg:w-[15%] mt-5">
-        
+        <div class="bg-white lg:w-[15%] mt-5 p-3 rounded-lg">
+          <h2 class="font-bold text-black mb-3">Your Cart</h2>
+          <ul id="cart-list" class="text-black text-sm space-y-2"></ul>
+          <h3 class="font-semibold text-black mt-4 flex justify-between">
+            Total: <div><span>৳</span><span id="cart-total">0</span></div>
+          </h3>
         </div>
       </div>
 
@@ -111,15 +115,15 @@
         class="fixed inset-0 bg-gray-200 bg-opacity-10 hidden items-center justify-center z-50"
       >
         <div
-          class="bg-white w-11/12 md:w-1/2 rounded-lg shadow-lg p-6 absolute lg:top-[40px] lg:left-[300px] sm:top-[2px] sm:left-[20px] md:top-[20px] md:left-[190px]"
+          class="bg-white w-11/12 md:w-1/2 rounded-lg shadow-lg p-6 absolute lg:top-[40px] lg:left-[300px] sm:top-[10px] sm:left-[20px] md:top-[1px] md:left-[190px]"
         >
           <button
             id="closeModal"
-            class="absolute top-2 right-3 text-xl font-bold"
+            class="absolute bottom-4 right-6 text-md text-gray-700 font-semibold bg-gray-200 py-1 px-2 border border-slate-50 shadow-slate-200 rounded-sm hover:bg-gray-100"
           >
-            ✕
+            Clear
           </button>
-          <div id="modalContent"></div>
+          <div id="modalContent" class="pb-4"></div>
         </div>
       </div>
     </section>

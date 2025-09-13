@@ -62,10 +62,10 @@ displayCards = (plants) => {
           <h1 class="font-bold pb-2 tree-name cursor-pointer text-green-700 hover:underline">${plant.name}</h1>
           <p class="text-[12px] opacity-80 line-clamp-2">${plant.description}</p>
           <div class="flex justify-between pt-2 pb-3">
-            <h1 class="bg-[#24e0695a] text-sm py-1 px-2 rounded-2xl text-[#15803D]">${plant.category}</h1>
+            <h1 class="bg-[#24e0695a] sm:text-[10px] lg:text-sm py-1 px-2 rounded-2xl text-[#15803D]">${plant.category}</h1>
             <h1 class="font-semibold">৳<span>${plant.price}</span></h1>
           </div>
-          <button class="bg-[#15803D] text-white text-[14px] px-3 py-2 rounded-3xl w-full">
+          <button class="bg-[#15803D] text-white text-[14px] px-3 py-2 rounded-3xl w-full add-to-cart cursor-pointer">
             Add to Cart
           </button>
         </div>
@@ -77,8 +77,18 @@ displayCards = (plants) => {
       openTreeModal(plant);
     });
 
+
+      // Add to Cart button
+singleCard.querySelector(".add-to-cart").addEventListener("click", () => {
+  alert(`${plant.name} has been added to the card`)
+  addToCart(plant);
+});
+
+
     cardContainer.appendChild(singleCard);
   });
+
+
 };
 
 
@@ -96,8 +106,8 @@ document.getElementById("all-trees").addEventListener("click", (e) => {
   loadAllTrees();
 });
 
-// Active Category Function
-function setActiveCategory(activeDiv) {
+
+ setActiveCategory=(activeDiv)=> {
   const allCategories = document.querySelectorAll(".category-item, #all-trees");
   allCategories.forEach((item) => {
     item.classList.remove("bg-[#15803D]", "text-white" ,"rounded-sm");
@@ -114,7 +124,7 @@ const treeModal = document.getElementById("treeModal");
 const closeModal = document.getElementById("closeModal");
 const modalContent = document.getElementById("modalContent");
 
-// Close modal
+
 closeModal.addEventListener("click", () => {
   treeModal.classList.add("hidden");
 });
@@ -122,14 +132,15 @@ closeModal.addEventListener("click", () => {
 
 openTreeModal=(plant)=> {
   modalContent.innerHTML = `
+  <h1 class="text-2xl font-bold mb-2">${plant.name}</h1>
     <img src="${plant.image}" class="w-full h-60 object-cover rounded-md mb-3" alt="${plant.name}">
-    <h1 class="text-2xl font-bold mb-2">${plant.name}</h1>
-    <p class="text-gray-700 mb-3">${plant.description}</p>
+    
+    <p class="text-gray-700 mb-3"><span class ="font-semibold">Description :</span> ${plant.description}</p>
     <div class="flex justify-between mb-3">
       <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">${plant.category}</span>
       <span class="font-semibold text-lg">৳${plant.price}</span>
     </div>
-    <button class="bg-[#15803D] text-white px-4 py-2 rounded-lg w-full">Add to Cart</button>
+    
   `;
   treeModal.classList.remove("hidden");
 }
@@ -139,14 +150,59 @@ openTreeModal=(plant)=> {
 
 const spinner = document.getElementById("loading-spinner");
 
-function showSpinner() {
+ showSpinner=()=> {
   spinner.classList.remove("hidden");
   cardContainer.classList.add("hidden");
 }
 
-function hideSpinner() {
+hideSpinner=()=> {
   spinner.classList.add("hidden");
   cardContainer.classList.remove("hidden");
+}
+
+
+
+// --------------------------------------------------------------
+let cart = []; 
+
+// Add to Cart
+ addToCart=(plant)=> {
+  cart.push(plant);
+  updateCart();
+}
+
+// Update Cart
+ updateCart=()=> {
+  const cartList = document.getElementById("cart-list");
+  const cartTotal = document.getElementById("cart-total");
+  
+  cartList.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    const li = document.createElement("li");
+    li.className = "flex justify-between items-center bg-[#f0fdf4] px-2 py-1 rounded-md";
+    li.innerHTML = `
+      <span>${item.name} - ৳${item.price}</span>
+      <button class="text-red-500 font-bold">❌</button>
+    `;
+
+  
+    li.querySelector("button").addEventListener("click", () => {
+      removeFromCart(index);
+    });
+
+    cartList.appendChild(li);
+  });
+
+  cartTotal.textContent = total;
+}
+
+ removeFromCart=(index)=> {
+  cart.splice(index, 1);
+  updateCart();
 }
 
 
